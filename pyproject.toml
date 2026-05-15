@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metabolic-intelligence-lab"
+version = "0.1.0"
+description = "System 0 / DUSE metabolic intelligence sandbox with salience, prospective memory, goal frontiers, CES/SDF-inspired reward, and experiment harnesses."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy", "matplotlib", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

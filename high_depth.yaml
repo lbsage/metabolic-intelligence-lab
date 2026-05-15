@@ -1,0 +1,13 @@
+name: exploratory
+salience_threshold: 1.05
+reserve: 0.2
+gamma_cost: 0.45
+delta_time: 0.2
+tool_budget: 0.45
+coupling_gamma: 0.035
+coupling_decay: 0.008
+prospective_depth: 2
+memory_decay: 0.015
+seed: 44
+steps: 30
+visualize: false

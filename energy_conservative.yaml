@@ -1,0 +1,13 @@
+name: baseline
+salience_threshold: 1.2
+reserve: 0.3
+gamma_cost: 0.7
+delta_time: 0.3
+tool_budget: 0.3
+coupling_gamma: 0.02
+coupling_decay: 0.01
+prospective_depth: 1
+memory_decay: 0.01
+seed: 42
+steps: 30
+visualize: false

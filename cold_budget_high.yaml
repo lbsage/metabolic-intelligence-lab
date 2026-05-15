@@ -1,0 +1,13 @@
+name: high_depth
+salience_threshold: 1.15
+reserve: 0.3
+gamma_cost: 0.7
+delta_time: 0.25
+tool_budget: 0.38
+coupling_gamma: 0.03
+coupling_decay: 0.01
+prospective_depth: 3
+memory_decay: 0.012
+seed: 45
+steps: 30
+visualize: false

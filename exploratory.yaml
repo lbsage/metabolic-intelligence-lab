@@ -1,0 +1,13 @@
+name: energy_conservative
+salience_threshold: 1.25
+reserve: 0.4
+gamma_cost: 1.0
+delta_time: 0.45
+tool_budget: 0.22
+coupling_gamma: 0.015
+coupling_decay: 0.015
+prospective_depth: 1
+memory_decay: 0.008
+seed: 43
+steps: 30
+visualize: false
