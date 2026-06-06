@@ -34,7 +34,7 @@ class RulePlanner(System2Plugin):
         if act == "ignite_fire":
             return w.has("sticks", 1)
         if act == "reinforce_shelter":
-            return w.has("cordage", 1) and w.has("sticks", 1)
+            return w.has("sticks", 1)
         return True
 
     def _apply_effects(self, act: str, res: Dict[str, Any]) -> None:
@@ -63,7 +63,7 @@ class RulePlanner(System2Plugin):
         elif act == "inspect_shelter":
             w.shelter.update(d)
         elif act == "reinforce_shelter":
-            if w.consume("cordage", 1) and w.consume("sticks", 1):
+            if w.consume("sticks", 1):
                 w.shelter.update(d)
         elif act == "craft_tool":
             w.add("stone_axe", 1)
@@ -75,7 +75,7 @@ class RulePlanner(System2Plugin):
         if act == "ignite_fire" and not self._pre_ok("ignite_fire"):
             return ["collect_wood", "ignite_fire"]
         if act == "reinforce_shelter" and not self._pre_ok("reinforce_shelter"):
-            return ["forage", "craft_tool", "reinforce_shelter"]
+            return ["collect_wood", "reinforce_shelter"]
         return None
 
     def __call__(self, agent_name: str, data: Dict[str, Any]) -> None:
