@@ -30,6 +30,36 @@ def test_simulate_empty_when_nothing_matches():
     assert result == []
 
 
+# -- ProspectiveEngine.simulate_horizon ------------------------------------
+
+def test_simulate_horizon_returns_list_of_lists():
+    pe = _engine_with_memory()
+    trajectory = pe.simulate_horizon(np.array([1.0, 0.0]), depth=3, threshold=0.5)
+    assert isinstance(trajectory, list)
+    assert len(trajectory) <= 3
+    for step in trajectory:
+        assert isinstance(step, list)
+
+
+def test_simulate_horizon_first_step_matches_simulate():
+    pe = _engine_with_memory()
+    trajectory = pe.simulate_horizon(np.array([1.0, 0.0]), depth=1, threshold=0.5, topk=1)
+    single = pe.simulate(np.array([1.0, 0.0]), threshold=0.5, topk=1)
+    assert trajectory[0] == single
+
+
+def test_simulate_horizon_stops_when_no_match():
+    pe = _engine_with_memory()
+    trajectory = pe.simulate_horizon(np.array([0.5, 0.5]), depth=3, threshold=0.99)
+    assert trajectory == [[]]
+
+
+def test_flatten_horizon_dedupes_preserving_order():
+    pe = _engine_with_memory()
+    flat = pe.flatten_horizon([["fire", "food"], ["food", "fire"], ["shelter"]])
+    assert flat == ["fire", "food", "shelter"]
+
+
 # -- ProspectiveLog --------------------------------------------------------
 
 def test_record_returns_int_id():
@@ -87,3 +117,34 @@ def test_serialization_roundtrip():
     d = pl.to_dict()
     pl2 = ProspectiveLog.from_dict(d)
     assert pl2.entries[0]["score"] == 1.0
+
+
+def test_record_stores_trajectory_when_given():
+    pl = ProspectiveLog()
+    eid = pl.record(0, "agent", ["fire"], trajectory=[["fire"], ["food"]])
+    assert pl.entries[eid]["trajectory"] == [["fire"], ["food"]]
+
+
+def test_record_omits_trajectory_when_not_given():
+    pl = ProspectiveLog()
+    eid = pl.record(0, "agent", ["fire"])
+    assert "trajectory" not in pl.entries[eid]
+
+
+def test_accuracy_summary_empty_when_unscored():
+    pl = ProspectiveLog()
+    pl.record(0, "agent", ["fire"])
+    s = pl.accuracy_summary()
+    assert s == {"n_scored": 0, "avg_score": 0.0, "hit_rate": 0.0}
+
+
+def test_accuracy_summary_aggregates_scored_entries():
+    pl = ProspectiveLog()
+    e0 = pl.record(0, "agent", ["fire"])
+    e1 = pl.record(1, "agent", ["food"])
+    pl.observe(e0, ["fire"])
+    pl.observe(e1, ["shelter"])
+    s = pl.accuracy_summary()
+    assert s["n_scored"] == 2
+    assert s["hit_rate"] == 0.5
+    assert abs(s["avg_score"] - 0.5) < 1e-9

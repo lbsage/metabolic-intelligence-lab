@@ -113,8 +113,13 @@ class DUSEAgent:
         if matches:
             label = matches[0][1]
             self.se.observe(label)
-            forecast = self.pe.simulate(context_vec)
-            eid = self.plog.record(t, context_id=self.name, forecast=forecast)
+            trajectory = None
+            if self.prospective_depth > 1:
+                trajectory = self.pe.simulate_horizon(context_vec, depth=self.prospective_depth)
+                forecast = self.pe.flatten_horizon(trajectory)
+            else:
+                forecast = self.pe.simulate(context_vec)
+            eid = self.plog.record(t, context_id=self.name, forecast=forecast, trajectory=trajectory)
             return {"top": label, "forecast": forecast, "matches": matches, "eid": eid, "t": t}
         return {"top": None, "forecast": [], "matches": [], "eid": None, "t": t}
 
