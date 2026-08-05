@@ -1,4 +1,3 @@
-import json
 import numpy as np
 import pytest
 from metabolic_intelligence_lab.core.world import WorldState

@@ -12,6 +12,26 @@ dependencies = ["numpy", "matplotlib", "pyyaml"]
 
 [project.optional-dependencies]
 notebooks = ["pandas", "jupyter"]
+dev = ["pytest", "pytest-cov", "ruff"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --tb=short"
+
+[tool.coverage.run]
+source = ["metabolic_intelligence_lab"]
+omit = ["*/visualization/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["F", "E", "W"]
+ignore = ["E501"]

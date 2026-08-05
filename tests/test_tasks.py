@@ -1,4 +1,4 @@
-from metabolic_intelligence_lab.core.tasks import Task, TaskQueue
+from metabolic_intelligence_lab.core.tasks import TaskQueue
 
 
 def test_add_returns_string_id():

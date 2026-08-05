@@ -1,4 +1,3 @@
-import pytest
 from metabolic_intelligence_lab.core.planner import RulePlanner
 from metabolic_intelligence_lab.core.telemetry import Telemetry
 from metabolic_intelligence_lab.core.tools import MockToolAPI

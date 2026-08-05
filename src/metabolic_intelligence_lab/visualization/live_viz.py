@@ -36,7 +36,7 @@ class LiveViz:
         self.ax_heat.set_title("Ternary Coupling Heatmap")
         if agent.ternary_field:
             m = self._build_coupling_matrix(agent.ternary_field)
-            im = self.ax_heat.imshow(m, interpolation="nearest", aspect="auto")
+            self.ax_heat.imshow(m, interpolation="nearest", aspect="auto")
             self.ax_heat.set_xticks(range(len(self.labels)))
             self.ax_heat.set_yticks(range(len(self.labels)))
             self.ax_heat.set_xticklabels(self.labels, rotation=45, ha="right")

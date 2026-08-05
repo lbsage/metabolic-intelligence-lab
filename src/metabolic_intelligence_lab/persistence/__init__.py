@@ -12,8 +12,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import yaml
-
 from metabolic_intelligence_lab.core.agent import DUSEAgent
 from metabolic_intelligence_lab.core.memory import GeometricMemory
 from metabolic_intelligence_lab.core.prospective import ProspectiveLog

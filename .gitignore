@@ -13,3 +13,4 @@ results/**/*.yml
 dist/
 build/
 .DS_Store
+.coverage
